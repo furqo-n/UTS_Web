@@ -79,22 +79,77 @@
         <div class="container">
             <h1>Data Registrasi User</h1>
             
-            <?php if (isset($_POST['submit'])): ?>
-                <div class="success-message">
-                    Registrasi Berhasil!
-                </div>
-                
-                <div class="back-button">
-                    <a href="index.html">Kembali ke Form Registrasi</a>
+            <?php
+                $error = '';
+                $first = '';
+                $last = '';
+                $city = '';
+                $age = 0;
+
+                if (isset($_POST['submit'])) {
+                    $first = trim($_POST['first_name'] ?? '');
+                    $last = trim($_POST['last_name'] ?? '');
+                    $city = trim($_POST['city'] ?? '');
+                    $age_raw = trim($_POST['age'] ?? '');
+                    if (!is_numeric($age_raw)) {
+                        $error = 'Umur harus berupa angka.';
+                    } else {
+                        $age = (int)$age_raw;
+                        if ($age < 10) {
+                            $error = 'Umur harus minimal 10 tahun.';
+                        }
+                    }
+                }
+            ?>
+
+            <?php if ($error): ?>
+                <?php
+                    $error_style = '';
+                    if ($error === 'Umur harus minimal 10 tahun.') {
+                        $error_style = 'background-color: rgba(220,53,69,0.12); border: 1px solid rgba(220,53,69,0.25); border-radius: 6px;';
+                    }
+                ?>
+                <div style="text-align: center; color: #dc3545; padding: 20px; <?php echo $error_style; ?>">
+                    <h3>Error</h3>
+                    <p><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
+                    <div class="back-button"><a href="index.html">Kembali ke Form Registrasi</a></div>
                 </div>
             <?php else: ?>
-                <div style="text-align: center; color: #dc3545; padding: 20px;">
-                    <h3>Error: Data tidak ditemukan</h3>
-                    <p>Silakan isi form registrasi terlebih dahulu.</p>
-                    <div class="back-button">
-                        <a href="index.html">Kembali ke Form Registrasi</a>
-                    </div>
-                </div>
+                <div class="success-message">Registrasi Berhasil!</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:5%;">No</th>
+                            <th>Nama Lengkap</th>
+                            <th style="width:15%;">Umur</th>
+                            <th>Asal Kota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $candidate = 2;
+                        while ($candidate <= $age):
+                            if (in_array($candidate, [4, 8], true)) {
+                                $candidate += 2;
+                                continue;
+                            }
+                            $no = $candidate;
+                        ?>
+                            <tr>
+                                <td><?= $no ?></td>
+                                <td><?= htmlspecialchars($first . ' ' . $last, ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= $age ?> tahun</td>
+                                <td><?= htmlspecialchars($city, ENT_QUOTES, 'UTF-8') ?></td>
+                            </tr>
+                        <?php
+                            $candidate += 2;
+                        endwhile;
+                        ?>
+                    </tbody>
+                </table>
+
+                <div class="back-button"><a href="index.html">Kembali ke Form Registrasi</a></div>
             <?php endif; ?>
         </div>
     </body>

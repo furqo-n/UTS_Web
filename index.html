@@ -28,7 +28,7 @@
         </style>
     </head>
     <body>
-        <form>
+    <form method="post" action="daftar.php">
             <table>
                 <tr>
                     <td colspan="2" style="text-align: center; font-size: 24px; font-weight: bold; padding-bottom: 20px;">
@@ -37,15 +37,21 @@
                 </tr>
                 <tr>
                     <td>Nama Depan:</td>
-                    <td><input type="text" required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                    <td><input type="text" name="last_name" required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;"></td>
                 </tr>
                 <tr>
                     <td>Nama Belakang:</td>
-                    <td><input type="text" required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                    <td><input type="text" name="first_name" required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                </tr>
+                <tr>
+                    <td>Umur (tahun):</td>
+                    <td><input type="number" name="age" required min="0" step="1" inputmode="numeric" pattern="\d+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;">
+                    </td>
                 </tr>
                 <tr>
                     <td>Asal Kota:</td>
-                    <td><input type="text" required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                    <td><input type="text" name="city" required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;"></td>
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center; padding-top: 20px;">
